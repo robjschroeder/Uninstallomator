@@ -15,6 +15,8 @@ spotify)
       "%USER_HOME%/Library/Logs/Spotify"
     )
     agents=()
-    daemons=()
+    daemons=(
+      "/Library/LaunchDaemons/com.mann.JamfClientCommunicationsDoctor.plist"
+    )
     profiles=()
 ;;

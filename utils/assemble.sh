@@ -117,10 +117,3 @@ mv -f "$tmp" "$target"
 chmod 755 "$target"
 rm -f "$blk"
 echo "# Wrote labels into: $target ($sz bytes)"
-
-# Quick verification
-if /usr/bin/grep -Fq "zoom-us)" "$target"; then
-  echo "# Verified: found 'zoom-us)' in $target"
-else
-  echo "# WARN: 'zoom-us)' not found in $target. Check fragment file and markers."
-fi

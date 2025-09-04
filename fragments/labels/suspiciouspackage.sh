@@ -1,4 +1,4 @@
-suspicious-package)
+suspiciouspackage)
     app_name="Suspicious Package"
     bundle_id="com.mothersruin.SuspiciousPackageApp"
     app_paths=(

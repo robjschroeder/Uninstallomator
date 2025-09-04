@@ -5,7 +5,9 @@ mist)
       "/Applications/Mist.app"
     )
     pkgs=()
-    files=()
+    files=(
+      "/Library/PrivilegedHelperTools/com.ninxsoft.mist.helper"
+    )
     user_files=(
       "%USER_HOME%/Library/Application Support/Mist"
       "%USER_HOME%/Library/Preferences/com.ninxsoft.mist.plist"

@@ -1,11 +1,13 @@
-camo-studio)
+camostudio)
     app_name="Camo Studio"
     bundle_id="com.reincubate.macos.cam"
     app_paths=(
       "/Applications/Camo Studio.app"
     )
     pkgs=()
-    files=()
+    files=(
+      "/Library/PrivilegedHelperTools/com.reincubate.macos.cam.PrivilegedHelper"
+    )
     user_files=(
       "%USER_HOME%/Library/Application Support/Camo Studio"
       "%USER_HOME%/Library/Preferences/com.reincubate.macos.cam.plist"

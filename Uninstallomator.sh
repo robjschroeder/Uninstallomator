@@ -107,8 +107,8 @@ apply_label() {
 
   case $label in
     # BEGIN LABEL CASES
-    # === fragment: fragments/labels/acrobat-reader.sh ===
-    acrobat-reader)
+    # === fragment: fragments/labels/adobeacrobatreader.sh ===
+    adobeacrobatreader)
         app_name="Acrobat Reader"
         bundle_id="com.adobe.Reader"
         app_paths=(
@@ -120,7 +120,10 @@ apply_label() {
           "com.adobe.acrobat.DC.reader.appsupport.pkg.MUI"
         )
         files=(
-          "/Library/Application Support/adobe"
+          "/Library/Application"
+          "Support/adobe/Reader"
+          "Support/adobe/Reader/DC"
+          "Support/adobe/WebExtnUtils/DC_Reader"
         )
         user_files=(
           "%USER_HOME%/Library/Application Support/Acrobat Reader"
@@ -128,18 +131,8 @@ apply_label() {
           "%USER_HOME%/Library/Caches/com.adobe.Reader"
           "%USER_HOME%/Library/Logs/Acrobat Reader"
         )
-        agents=(
-          "/Library/LaunchAgents/com.adobe.AdobeCreativeCloud.plist"
-          "/Library/LaunchAgents/com.adobe.ccxprocess.plist"
-          "/Library/LaunchAgents/com.adobe.GC.Invoker-1.0.plist"
-          "/Library/LaunchAgents/com.adobe.ARMDCHelper.cc24aef4a1b90ed56a725c38014c95072f92651fb65e1bf9c8e43c37a23d420d.plist"
-        )
-        daemons=(
-          "/Library/LaunchDaemons/com.adobe.agsservice.plist"
-          "/Library/LaunchDaemons/com.adobe.ARMDC.SMJobBlessHelper.plist"
-          "/Library/LaunchDaemons/com.adobe.ARMDC.Communicator.plist"
-          "/Library/LaunchDaemons/com.adobe.acc.installer.v2.plist"
-        )
+        agents=()
+        daemons=()
         profiles=()
     ;;
     
@@ -163,15 +156,17 @@ apply_label() {
         profiles=()
     ;;
     
-    # === fragment: fragments/labels/camo-studio.sh ===
-    camo-studio)
+    # === fragment: fragments/labels/camostudio.sh ===
+    camostudio)
         app_name="Camo Studio"
         bundle_id="com.reincubate.macos.cam"
         app_paths=(
           "/Applications/Camo Studio.app"
         )
         pkgs=()
-        files=()
+        files=(
+          "/Library/PrivilegedHelperTools/com.reincubate.macos.cam.PrivilegedHelper"
+        )
         user_files=(
           "%USER_HOME%/Library/Application Support/Camo Studio"
           "%USER_HOME%/Library/Preferences/com.reincubate.macos.cam.plist"
@@ -185,39 +180,8 @@ apply_label() {
         profiles=()
     ;;
     
-    # === fragment: fragments/labels/chrome.sh ===
-    chrome)
-        app_name="Chrome"
-        bundle_id="com.google.Chrome"
-        app_paths=(
-          "/Applications/Google Chrome.app"
-        )
-        pkgs=(
-          "com.google.Chrome"
-        )
-        files=(
-          "/Library/Application Support/google"
-          "/Library/google"
-        )
-        user_files=(
-          "%USER_HOME%/Library/Application Support/Chrome"
-          "%USER_HOME%/Library/Preferences/com.google.Chrome.plist"
-          "%USER_HOME%/Library/Caches/com.google.Chrome"
-          "%USER_HOME%/Library/Logs/Chrome"
-        )
-        agents=(
-          "/Library/LaunchAgents/com.google.keystone.xpcservice.plist"
-          "/Library/LaunchAgents/com.google.keystone.agent.plist"
-        )
-        daemons=(
-          "/Library/LaunchDaemons/com.google.GoogleUpdater.wake.system.plist"
-          "/Library/LaunchDaemons/com.google.keystone.daemon.plist"
-        )
-        profiles=()
-    ;;
-    
-    # === fragment: fragments/labels/dfu-blaster-pro.sh ===
-    dfu-blaster-pro)
+    # === fragment: fragments/labels/dfublasterpro.sh ===
+    dfublasterpro)
         app_name="DFU Blaster Pro"
         bundle_id="com.twocanoes.DFU-Blaster-Pro"
         app_paths=(
@@ -234,8 +198,73 @@ apply_label() {
           "%USER_HOME%/Library/Logs/DFU Blaster Pro"
         )
         agents=()
+        daemons=()
+        profiles=()
+    ;;
+    
+    # === fragment: fragments/labels/googlechrome.sh ===
+    googlechrome)
+        app_name="Chrome"
+        bundle_id="com.google.Chrome"
+        app_paths=(
+          "/Applications/Google Chrome.app"
+        )
+        pkgs=(
+          "com.google.Chrome"
+        )
+        files=()
+        user_files=(
+          "%USER_HOME%/Library/Application Support/Chrome"
+          "%USER_HOME%/Library/Preferences/com.google.Chrome.plist"
+          "%USER_HOME%/Library/Caches/com.google.Chrome"
+          "%USER_HOME%/Library/Logs/Chrome"
+        )
+        agents=()
+        daemons=()
+        profiles=()
+    ;;
+    
+    # === fragment: fragments/labels/microsoftedge.sh ===
+    microsoftedge)
+        app_name="Edge"
+        bundle_id="com.microsoft.edgemac"
+        app_paths=(
+          "/Applications/Microsoft Edge.app"
+        )
+        pkgs=(
+          "com.microsoft.edgemac"
+          "com.microsoft.dlp.ux"
+          "com.microsoft.dlp.daemon"
+          "com.jamf.appinstallers.Edge"
+          "com.microsoft.package.Microsoft_Excel.app"
+          "com.microsoft.powershell"
+          "com.microsoft.CompanyPortalMac"
+          "com.microsoft.OneDrive"
+          "com.microsoft.wdav"
+          "com.microsoft.package.Microsoft_Outlook.app"
+          "com.microsoft.dlp.agent"
+          "com.jamf.appinstallers.MicrosoftEdge"
+          "com.microsoft.package.Microsoft_AutoUpdate.app"
+          "com.microsoft.MSTeamsAudioDevice"
+          "com.microsoft.pkg.licensing"
+          "com.microsoft.teams2"
+        )
+        files=(
+          "/Library/microsoft/Edge"
+          "/Library/Application"
+          "Support/microsoft/EdgeUpdater"
+          "Support/microsoft/EdgeUpdater/118.0.2088.86"
+          "/Library/microsoft/Edge/NativeMessagingHosts"
+        )
+        user_files=(
+          "%USER_HOME%/Library/Application Support/Edge"
+          "%USER_HOME%/Library/Preferences/com.microsoft.edgemac.plist"
+          "%USER_HOME%/Library/Caches/com.microsoft.edgemac"
+          "%USER_HOME%/Library/Logs/Edge"
+        )
+        agents=()
         daemons=(
-          "/Library/LaunchDaemons/com.twocanoes.dfublasterhelper.plist"
+          "/Library/LaunchDaemons/com.microsoft.EdgeUpdater.wake.system.plist"
         )
         profiles=()
     ;;
@@ -248,7 +277,9 @@ apply_label() {
           "/Applications/Mist.app"
         )
         pkgs=()
-        files=()
+        files=(
+          "/Library/PrivilegedHelperTools/com.ninxsoft.mist.helper"
+        )
         user_files=(
           "%USER_HOME%/Library/Application Support/Mist"
           "%USER_HOME%/Library/Preferences/com.ninxsoft.mist.plist"
@@ -280,7 +311,9 @@ apply_label() {
           "%USER_HOME%/Library/Logs/Postman"
         )
         agents=()
-        daemons=()
+        daemons=(
+          "/Library/LaunchDaemons/com.reincubate.macos.cam.PrivilegedHelper.plist"
+        )
         profiles=()
     ;;
     
@@ -324,12 +357,14 @@ apply_label() {
           "%USER_HOME%/Library/Logs/Spotify"
         )
         agents=()
-        daemons=()
+        daemons=(
+          "/Library/LaunchDaemons/com.mann.JamfClientCommunicationsDoctor.plist"
+        )
         profiles=()
     ;;
     
-    # === fragment: fragments/labels/suspicious-package.sh ===
-    suspicious-package)
+    # === fragment: fragments/labels/suspiciouspackage.sh ===
+    suspiciouspackage)
         app_name="Suspicious Package"
         bundle_id="com.mothersruin.SuspiciousPackageApp"
         app_paths=(
@@ -348,8 +383,8 @@ apply_label() {
         profiles=()
     ;;
     
-    # === fragment: fragments/labels/zoom-us.sh ===
-    zoom-us)
+    # === fragment: fragments/labels/zoomus.sh ===
+    zoomus)
         app_name="zoom.us"
         bundle_id="us.zoom.xos"
         app_paths=(
@@ -366,9 +401,7 @@ apply_label() {
           "%USER_HOME%/Library/Logs/zoom.us"
         )
         agents=()
-        daemons=(
-          "/Library/LaunchDaemons/us.zoom.ZoomDaemon.plist"
-        )
+        daemons=()
         profiles=()
     ;;
     

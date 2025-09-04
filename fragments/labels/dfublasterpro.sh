@@ -1,4 +1,4 @@
-dfu-blaster-pro)
+dfublasterpro)
     app_name="DFU Blaster Pro"
     bundle_id="com.twocanoes.DFU-Blaster-Pro"
     app_paths=(
@@ -15,8 +15,6 @@ dfu-blaster-pro)
       "%USER_HOME%/Library/Logs/DFU Blaster Pro"
     )
     agents=()
-    daemons=(
-      "/Library/LaunchDaemons/com.twocanoes.dfublasterhelper.plist"
-    )
+    daemons=()
     profiles=()
 ;;

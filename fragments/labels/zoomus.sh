@@ -1,4 +1,4 @@
-zoom-us)
+zoomus)
     app_name="zoom.us"
     bundle_id="us.zoom.xos"
     app_paths=(
@@ -15,8 +15,6 @@ zoom-us)
       "%USER_HOME%/Library/Logs/zoom.us"
     )
     agents=()
-    daemons=(
-      "/Library/LaunchDaemons/us.zoom.ZoomDaemon.plist"
-    )
+    daemons=()
     profiles=()
 ;;

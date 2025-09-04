@@ -15,6 +15,8 @@ postman)
       "%USER_HOME%/Library/Logs/Postman"
     )
     agents=()
-    daemons=()
+    daemons=(
+      "/Library/LaunchDaemons/com.reincubate.macos.cam.PrivilegedHelper.plist"
+    )
     profiles=()
 ;;

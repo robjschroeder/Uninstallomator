@@ -1,0 +1,20 @@
+slack)
+    app_name="Slack"
+    bundle_id="com.tinyspeck.slackmacgap"
+    app_paths=(
+      "/Applications/Slack.app"
+    )
+    pkgs=(
+      "com.jamf.appinstallers.Slack"
+    )
+    files=()
+    user_files=(
+      "%USER_HOME%/Library/Application Support/Slack"
+      "%USER_HOME%/Library/Preferences/com.tinyspeck.slackmacgap.plist"
+      "%USER_HOME%/Library/Caches/com.tinyspeck.slackmacgap"
+      "%USER_HOME%/Library/Logs/Slack"
+    )
+    agents=()
+    daemons=()
+    profiles=()
+;;

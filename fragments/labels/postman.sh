@@ -1,0 +1,20 @@
+postman)
+    app_name="Postman"
+    bundle_id="com.postmanlabs.mac"
+    app_paths=(
+      "/Applications/Postman.app"
+    )
+    pkgs=(
+      "com.jamf.appinstallers.Postman"
+    )
+    files=()
+    user_files=(
+      "%USER_HOME%/Library/Application Support/Postman"
+      "%USER_HOME%/Library/Preferences/com.postmanlabs.mac.plist"
+      "%USER_HOME%/Library/Caches/com.postmanlabs.mac"
+      "%USER_HOME%/Library/Logs/Postman"
+    )
+    agents=()
+    daemons=()
+    profiles=()
+;;

@@ -1,0 +1,20 @@
+mist)
+    app_name="Mist"
+    bundle_id="com.ninxsoft.mist"
+    app_paths=(
+      "/Applications/Mist.app"
+    )
+    pkgs=()
+    files=()
+    user_files=(
+      "%USER_HOME%/Library/Application Support/Mist"
+      "%USER_HOME%/Library/Preferences/com.ninxsoft.mist.plist"
+      "%USER_HOME%/Library/Caches/com.ninxsoft.mist"
+      "%USER_HOME%/Library/Logs/Mist"
+    )
+    agents=()
+    daemons=(
+      "/Library/LaunchDaemons/com.ninxsoft.mist.helper.plist"
+    )
+    profiles=()
+;;

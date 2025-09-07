@@ -10,10 +10,9 @@ adobeacrobatreader)
       "com.adobe.acrobat.DC.reader.appsupport.pkg.MUI"
     )
     files=(
-      "/Library/Application"
-      "Support/adobe/Reader"
-      "Support/adobe/Reader/DC"
-      "Support/adobe/WebExtnUtils/DC_Reader"
+      "/Library/Application Support/adobe/Reader"
+      "/Library/Application Support/adobe/Reader/DC"
+      "/Library/Application Support/adobe/WebExtnUtils/DC_Reader"
     )
     user_files=(
       "%USER_HOME%/Library/Application Support/Acrobat Reader"

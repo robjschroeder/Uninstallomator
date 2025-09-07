@@ -1,119 +1,190 @@
 #!/bin/zsh --no-rcs
-# Assemble label CASE entries into ./Uninstallomator.sh.
-# Replaces content between:
-#   # BEGIN LABEL CASES
-#   # END LABEL CASES
 
-set -euo pipefail
-setopt extendedglob
+# Script used to assemble the Uninstallomator script from fragments
+# This allows us to maintain smaller files and easier to manage pieces
+# of code.
 
+# Package
+pkgname="Uninstallomator"
+identifier="com.techitout.${pkgname}"
+install_location="/usr/local/Uninstallomator/"
+signature="Apple Development: Robert Schroeder (RHMNJQJU6B)"
+
+# Notarization
+dev_keychain_label=""
+
+# Parse Arguments
+zparseopts -D -E -a opts r -run s -script p -pkg n -notarize h -help -labels+:=label_args l+:=label_args
+
+if (( ${opts[(I)(-h|--help)]} )); then
+  echo "usage: assemble.sh [--script|--pkg|--notarize] [-labels path/to/labels ...] [arguments...]"
+  echo
+  echo "builds and runs the Uninstallomator script from the fragements."
+  echo "additional arguments are passed into the Uninstallomator script for testing."
+  exit
+fi
+
+# default setting
+runScript=1
+
+if (( ${opts[(I)(-s|--script)]} )); then
+    runScript=0
+    buildScript=1
+fi
+
+if (( ${opts[(I)(-p|--pkg)]} )); then
+    runScript=0
+    buildScript=1
+    buildPkg=1
+fi
+
+if (( ${opts[(I)(-n|--notarize)]} )); then
+    runScript=0
+    buildScript=1
+    buildPkg=1
+    notarizePkg=1
+fi
+
+# -r/--run option overrides default setting
+if (( ${opts[(I)(-r|--run)]} )); then
+    runScript=1
+fi
+
+label_flags=( -l --labels )
+# array subtraction to remove options text
+label_paths=(${label_args:|label_flags})
+
+# Folders
 script_dir=$(dirname ${0:A})
 repo_dir=$(dirname $script_dir)
-labels_dir="$repo_dir/fragments/labels"
-target="$repo_dir/Uninstallomator.sh"   # << default to .zsh
-dry_run=0
-min_bytes=200
+build_dir="$repo_dir/build"
+destination_file="$build_dir/Uninstallomator.sh"
+fragments_dir="$repo_dir/fragments"
+labels_dir="$fragments_dir/labels"
 
-while [[ $# -gt 0 ]]; do
-  case "$1" in
-    --labels) labels_dir="$2"; shift 2;;
-    --target) target="$2"; shift 2;;
-    --dry-run) dry_run=1; shift;;
-    -h|--help)
-      cat <<USAGE
-Usage: ${0##*/} [--labels DIR] [--target FILE] [--dry-run]
-Replaces the case labels region between markers in the target file.
-Markers (indent allowed):
-  # BEGIN LABEL CASES
-  # END LABEL CASES
-USAGE
-      exit 0;;
-    *) echo "# Unknown option: $1"; exit 2;;
-  esac
+label_paths+=$labels_dir
+
+fragment_files=( header.sh version.sh functions.sh arguments.sh main.sh )
+
+# check if fragment files exist (and are readable)
+for fragment in $fragment_files; do
+    if [[ ! -e $fragments_dir/$fragment ]]; then
+        echo "# $fragments_dir/$fragment not found!"
+        exit 1
+    fi
 done
 
-[[ -f "$target" ]] || { echo "# Target not found: $target"; exit 1; }
-[[ -d "$labels_dir" ]] || { echo "# Labels dir not found: $labels_dir"; exit 1; }
-perl -i -pe 's/\r$//' "$target" 2>/dev/null || true
-
-if ! /usr/bin/grep -Fq "# BEGIN LABEL CASES" "$target"; then
-  echo "# Marker not found in target: # BEGIN LABEL CASES"; exit 1; fi
-if ! /usr/bin/grep -Fq "# END LABEL CASES" "$target"; then
-  echo "# Marker not found in target: # END LABEL CASES"; exit 1; fi
-
-# Gather fragments
-label_files=("$labels_dir"/**/*.sh(N) "$labels_dir"/*.sh(N))
-label_files=("${(ou)label_files[@]}")
-(( ${#label_files[@]} )) || { echo "# No label fragments found in $labels_dir"; exit 1; }
-
-echo "# Target : $target"
-echo "# Labels : $labels_dir"
-echo "# Fragments found: ${#label_files[@]}"
-
-# Build temp block file (avoids awk -v newline issues)
-ts=$(date +%Y%m%d-%H%M%S)
-blk="$repo_dir/.assemble_block.${ts}.tmp"
-{
-  echo "# BEGIN LABEL CASES"
-  for f in "${label_files[@]}"; do
-    rel="${f#${repo_dir}/}"
-    echo "# === fragment: ${rel} ==="
-    cat "$f"
-    echo
-  done
-  echo "# END LABEL CASES"
-} > "$blk"
-
-# Sanity on block
-if [[ ! -s "$blk" ]]; then echo "# Error: assembled block is empty"; rm -f "$blk"; exit 1; fi
-
-# Dry run?
-if (( dry_run )); then
-  echo "# Backup: (dry-run) $target.bak-$ts"
-  echo "# DRY-RUN: would write label cases into $target"
-  echo "# ------- BEGIN NEW BLOCK -------"
-  cat "$blk"
-  echo "# -------- END NEW BLOCK -------"
-  echo "# Labels present in assembled block:"
-  awk '/^[[:space:]]*[A-Za-z0-9._-]+\)/{sub(/\).*/,"",$1);gsub(/[()]/,"",$1);print "  - "$1}' "$blk" | sort -u
-  rm -f "$blk"
-  exit 0
+if [[ ! -d $labels_dir ]]; then
+    echo "# $labels_dir not found!"
+    exit 1
 fi
 
-# Backup current file
-backup="${target}.bak-${ts}"
-cp "$target" "$backup"
-echo "# Backup: $backup"
+# Create $build_dir when necessary
+mkdir -p $build_dir
 
-tmp="${target}.tmp-${ts}"
-/usr/bin/awk -v blk="$blk" '
-  function print_block_with_indent(file, indent,   line) {
-    while ((getline line < file) > 0) {
-      if (line == "") print indent;
-      else print indent line;
-    }
-    close(file);
-  }
-  {
-    if ($0 ~ /^[ \t]*# BEGIN LABEL CASES[ \t]*$/) {
-      match($0, /^[ \t]*/); indent=substr($0, RSTART, RLENGTH);
-      print_block_with_indent(blk, indent);
-      while (getline) { if ($0 ~ /^[ \t]*# END LABEL CASES[ \t]*$/) break; }
-      next;
-    }
-    print;
-  }
-' "$backup" > "$tmp"
+# add the header
+cat "$fragments_dir/header.sh" > $destination_file
+echo >> "$destination_file"
 
-# Sanity floor
-if [[ ! -s "$tmp" ]]; then echo "# Error: assembled file is empty. Keeping original."; rm -f "$tmp" "$blk"; exit 1; fi
-sz=$(wc -c < "$tmp" | tr -d ' ')
-if [[ -z "$sz" || "$sz" -lt "$min_bytes" ]]; then
-  echo "# Error: assembled target too small ($sz bytes). Keeping original."
-  rm -f "$tmp" "$blk"; exit 1
+# read the version.txt
+version=$(cat "$fragments_dir/version.sh")
+versiondate=$(date +%F)
+printf 'VERSION="%s"\nVERSIONDATE="%s"\n\n' "$version" "$versiondate" >> "$destination_file"
+echo >> "$destination_file"
+
+# add the functions.txt
+cat "$fragments_dir/functions.sh" >> $destination_file
+echo >> "$destination_file"
+
+# add the arguments.txt
+cat "$fragments_dir/arguments.sh" >> $destination_file
+echo >> "$destination_file"
+
+# all the labels
+for lpath in $label_paths; do
+    if [[ -d $lpath ]]; then
+        cat "$lpath"/*.sh >> $destination_file
+    else
+        echo "# $lpath not a directory, skipping..."
+    fi
+done
+
+# add the footer
+cat "$fragments_dir/main.sh" >> $destination_file
+echo >> "$destination_file"
+
+# set the executable bit
+chmod +x $destination_file
+
+# run script with remaining arguments
+if [[ $runScript -eq 1 ]]; then
+    $destination_file "$@"
+    exit_code=$?
 fi
 
-mv -f "$tmp" "$target"
-chmod 755 "$target"
-rm -f "$blk"
-echo "# Wrote labels into: $target ($sz bytes)"
+# copy the script to root of repo when flag is set
+if [[ $buildScript -eq 1 ]]; then
+    echo "# copying script to $repo_dir/Uninstallomator.sh"
+    cp $destination_file $repo_dir/Uninstallomator.sh
+    chmod 755 $repo_dir/Uninstallomator.sh
+    # also update Labels.txt
+    $repo_dir/Uninstallomator.sh | tail -n +2 > $repo_dir/Labels.txt
+fi
+
+# build a pkg when flag is set
+if [[ buildPkg -eq 1 ]]; then
+    echo "# building installer package"
+
+    tmpfolder=$(mktemp -d)
+    payloadfolder="${tmpfolder}/payload"
+
+    # create a projectfolder with a payload folder
+    if [[ ! -d "${payloadfolder}" ]]; then
+        mkdir -p "${payloadfolder}"
+    fi
+
+    # copy the script file
+    cp $repo_dir/Uninstallomator.sh ${payloadfolder}
+    chmod 755 ${payloadfolder}/Uninstallomator.sh
+
+    # set the DEBUG variable to 0
+    sed -i '' -e 's/^DEBUG=1$/DEBUG=0/g' ${payloadfolder}/Uninstallomator.sh
+
+    # build the component package
+    pkgpath="${script_dir}/${pkgname}.pkg"
+
+    pkgbuild --root "${payloadfolder}" \
+             --identifier "${identifier}" \
+             --version "${version}" \
+             --install-location "${install_location}" \
+             "${pkgpath}"
+
+    # build the product archive
+
+    productpath="${repo_dir}/${pkgname}-${version}.pkg"
+
+    productbuild --package "${pkgpath}" \
+                 --version "${version}" \
+                 --identifier "${identifier}" \
+                 --sign "${signature}" \
+                 "${productpath}"
+
+    # clean up project folder
+    rm -Rf "${projectfolder}"
+    # clean the component pkgname
+    rm "$pkgpath"
+fi
+
+# notarize when flag is set
+if [[ $notarizePkg -eq 1 ]]; then
+    # NOTE: notarytool requires Xcode 13
+
+    # upload for notarization
+    xcrun notarytool submit "$productpath" --keychain-profile "$dev_keychain_label" --wait
+
+    # staple result
+    echo "# Stapling $productpath"
+    xcrun stapler staple "$productpath"
+fi
+
+exit $exit_code

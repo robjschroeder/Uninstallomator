@@ -24,9 +24,8 @@ microsoftedge)
     )
     files=(
       "/Library/microsoft/Edge"
-      "/Library/Application"
-      "Support/microsoft/EdgeUpdater"
-      "Support/microsoft/EdgeUpdater/118.0.2088.86"
+      "/Library/Application Support/microsoft/EdgeUpdater"
+      "/Library/Application Support/microsoft/EdgeUpdater/118.0.2088.86"
       "/Library/microsoft/Edge/NativeMessagingHosts"
     )
     user_files=(
@@ -38,6 +37,7 @@ microsoftedge)
     agents=()
     daemons=(
       "/Library/LaunchDaemons/com.microsoft.EdgeUpdater.wake.system.plist"
+      "/Library/LaunchDaemons/com.jamf.appinstallers.MicrosoftEdge.plist"
     )
     profiles=()
 ;;

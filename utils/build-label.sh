@@ -154,12 +154,13 @@ for base in "/Library/Application Support/${vendor_root#*.}" "/Library/${vendor_
   done < <(find "$base" -maxdepth 2 -type d 2>/dev/null)
 done
 
-# Dedup
-receipts=($(printf '%s\n' "${receipts[@]:-}" | order_uniq))
-launch_agents=($(printf '%s\n' "${launch_agents[@]:-}" | order_uniq))
-launch_daemons=($(printf '%s\n' "${launch_daemons[@]:-}" | order_uniq))
-helpers=($(printf '%s\n' "${helpers[@]:-}" | order_uniq))
-system_files=($(printf '%s\n' "${system_files[@]:-}" | order_uniq))
+# Dedup (split on newlines only; preserve spaces in paths)
+receipts=("${(@f)$(printf '%s\n' "${receipts[@]:-}" | order_uniq)}")
+launch_agents=("${(@f)$(printf '%s\n' "${launch_agents[@]:-}" | order_uniq)}")
+launch_daemons=("${(@f)$(printf '%s\n' "${launch_daemons[@]:-}" | order_uniq)}")
+helpers=("${(@f)$(printf '%s\n' "${helpers[@]:-}" | order_uniq)}")
+system_files=("${(@f)$(printf '%s\n' "${system_files[@]:-}" | order_uniq)}")
+
 
 # --- User files template (engine expands %USER_HOME%) ---
 user_files+=(

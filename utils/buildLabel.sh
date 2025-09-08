@@ -88,9 +88,12 @@ match_app_token() {
 
 # ============ DISCOVERY ============
 # --- Receipts (coarse; filtered later by engine with --show-skipped if needed) ---
-while IFS= read -r p; do receipts+=("$p"); done < <(
-  /usr/sbin/pkgutil --pkgs 2>/dev/null | egrep -i "${bundle_id}|${vendor_root}|${app_name// /[[:space:]]}" || true
-)
+while IFS= read -r p; do
+  # Only include exact bundle_id or bundle_id with minimal suffixes
+  if [[ "$p" == "$bundle_id" || "$p" == "$bundle_id".* ]]; then
+    receipts+=("$p")
+  fi
+done < <(/usr/sbin/pkgutil --pkgs 2>/dev/null)
 
 # --- Launchd (tight: prefer bundle_id prefix; minimal fallback to app tokens) ---
 for dir in /Library/LaunchAgents /Library/LaunchDaemons; do

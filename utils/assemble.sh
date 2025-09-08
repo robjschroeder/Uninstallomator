@@ -128,7 +128,7 @@ if [[ $buildScript -eq 1 ]]; then
     cp $destination_file $repo_dir/Uninstallomator.sh
     chmod 755 $repo_dir/Uninstallomator.sh
     # also update Labels.txt
-    $repo_dir/Uninstallomator.sh | tail -n +2 > $repo_dir/Labels.txt
+    grep -E '^[a-zA-Z0-9_]+[)]' "$repo_dir/Uninstallomator.sh" | sed 's/)//' | grep -vE '^(longversion|valuesfromarguments)$' > "$repo_dir/Labels.txt"
 fi
 
 # build a pkg when flag is set

@@ -6,21 +6,6 @@ microsoftedge)
     )
     pkgs=(
       "com.microsoft.edgemac"
-      "com.microsoft.dlp.ux"
-      "com.microsoft.dlp.daemon"
-      "com.jamf.appinstallers.Edge"
-      "com.microsoft.package.Microsoft_Excel.app"
-      "com.microsoft.powershell"
-      "com.microsoft.CompanyPortalMac"
-      "com.microsoft.OneDrive"
-      "com.microsoft.wdav"
-      "com.microsoft.package.Microsoft_Outlook.app"
-      "com.microsoft.dlp.agent"
-      "com.jamf.appinstallers.MicrosoftEdge"
-      "com.microsoft.package.Microsoft_AutoUpdate.app"
-      "com.microsoft.MSTeamsAudioDevice"
-      "com.microsoft.pkg.licensing"
-      "com.microsoft.teams2"
     )
     files=(
       "/Library/microsoft/Edge"

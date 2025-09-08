@@ -358,7 +358,7 @@ fi
 SESSION=$RANDOM
 
 # MARK: START
-printlog "################## Start Uninstallomator v. $VERSION, date $VERSIONDATE" REQ
+printlog "################## Start Uninstallomator" REQ
 printlog "################## Version: $VERSION" INFO
 printlog "################## Date: $VERSIONDATE" INFO
 printlog "################## $label" INFO

@@ -155,6 +155,9 @@ do_uninstall(){
   for p in "${daemons[@]:-}"; do [[ -n "$p" ]] && unload_launch "$p"; done
 
   # remove app bundles and system files
+  found=0
+  for p in "${app_paths[@]}"; do [[ -n "$p" && -e "$p" ]] && found=1; done
+  if (( found == 0 )); then cleanupAndExit 0 "$app_name not found in defined app paths" ERROR; fi
   for p in "${app_paths[@]}"; do [[ -n "$p" ]] && confirm_rm "$p"; done
   for p in "${files[@]:-}";   do [[ -n "$p" ]] && confirm_rm "$p"; done
 

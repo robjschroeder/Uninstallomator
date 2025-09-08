@@ -3,7 +3,7 @@ label="" # if no label is sent to the script, this will be used
 
 # Uninstallomator
 #
-# Uninstalls applictions
+# Uninstalls applications
 # 2025 Uninstallomator
 #
 # Inspired by the Installomator project: https://github.com/Installomator
@@ -71,7 +71,7 @@ if [[ $(/usr/bin/arch) == "arm64" ]]; then
         rosetta2=no
     fi
 fi
-VERSION="1.1.1"
+VERSION="1.1.2"
 VERSIONDATE="2025-09-08"
 
 
@@ -232,6 +232,9 @@ do_uninstall(){
   for p in "${daemons[@]:-}"; do [[ -n "$p" ]] && unload_launch "$p"; done
 
   # remove app bundles and system files
+  found=0
+  for p in "${app_paths[@]}"; do [[ -n "$p" && -e "$p" ]] && found=1; done
+  if (( found == 0 )); then cleanupAndExit 0 "$app_name not found in defined app paths" ERROR; fi
   for p in "${app_paths[@]}"; do [[ -n "$p" ]] && confirm_rm "$p"; done
   for p in "${files[@]:-}";   do [[ -n "$p" ]] && confirm_rm "$p"; done
 

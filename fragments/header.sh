@@ -3,7 +3,7 @@ label="" # if no label is sent to the script, this will be used
 
 # Uninstallomator
 #
-# Uninstalls applictions
+# Uninstalls applications
 # 2025 Uninstallomator
 #
 # Inspired by the Installomator project: https://github.com/Installomator

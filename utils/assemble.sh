@@ -8,7 +8,7 @@
 pkgname="Uninstallomator"
 identifier="com.techitout.${pkgname}"
 install_location="/usr/local/Uninstallomator/"
-signature="Apple Development: Robert Schroeder (RHMNJQJU6B)"
+signature="Developer ID Installer: Robert Schroeder (6GBSVT64FS)"
 
 # Notarization
 dev_keychain_label=""

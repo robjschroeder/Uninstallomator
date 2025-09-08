@@ -16,7 +16,7 @@ __Thank you for contributing!__
 
 ## Labels
 
-If you need to add a new label for a piece of software, please review any tutorials or documentation in the Wiki.
+If you need to add a new label for a piece of software, please review the README in utils.
 
 When submitting a new label, file a pull request (PR). Include any relevant logs or details in the PR description. Please submit one label per PR for clarity.
 

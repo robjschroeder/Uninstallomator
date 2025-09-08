@@ -24,6 +24,22 @@ NOTIFY=success
 #   - silent       no notifications
 #   - all          all notifications (great for Self Service installation)
 
+# logo-icon used in dialog boxes if app is blocking
+LOGO=appstore
+# options:
+#   - appstore      Icon is Apple App Store (default)
+#   - jamf          JAMF Pro
+#   - mosyleb       Mosyle Business
+#   - mosylem       Mosyle Manager (Education)
+#   - addigy        Addigy
+#   - microsoft     Microsoft Endpoint Manager (Intune)
+#   - ws1           Workspace ONE (AirWatch)
+#   - filewave      FileWave
+#   - kandji        Kandji
+# path can also be set in the command call, and if file exists, it will be used.
+# Like 'LOGO="/System/Applications/App\ Store.app/Contents/Resources/AppIcon.icns"'
+# (spaces have to be escaped).
+
 # User Scope
 USERSCOPE=0
 # options:
@@ -55,8 +71,8 @@ if [[ $(/usr/bin/arch) == "arm64" ]]; then
         rosetta2=no
     fi
 fi
-VERSION="1.1.0"
-VERSIONDATE="2025-09-07"
+VERSION="1.1.1"
+VERSIONDATE="2025-09-08"
 
 
 # MARK: Functions

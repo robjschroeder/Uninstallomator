@@ -5,7 +5,9 @@ charles)
       "/Applications/Charles.app"
     )
     pkgs=()
-    files=()
+    files=(
+      "/Library/PrivilegedHelperTools/com.xk72.charles.ProxyHelper"
+    )
     user_files=(
       "%USER_HOME%/Library/Application Support/Charles"
       "%USER_HOME%/Library/Preferences/com.xk72.Charles.plist"

@@ -1,0 +1,20 @@
+charles)
+    app_name="Charles"
+    bundle_id="com.xk72.Charles"
+    app_paths=(
+      "/Applications/Charles.app"
+    )
+    pkgs=()
+    files=()
+    user_files=(
+      "%USER_HOME%/Library/Application Support/Charles"
+      "%USER_HOME%/Library/Preferences/com.xk72.Charles.plist"
+      "%USER_HOME%/Library/Caches/com.xk72.Charles"
+      "%USER_HOME%/Library/Logs/Charles"
+    )
+    agents=()
+    daemons=(
+      "/Library/LaunchDaemons/com.xk72.charles.ProxyHelper.plist"
+    )
+    profiles=()
+;;

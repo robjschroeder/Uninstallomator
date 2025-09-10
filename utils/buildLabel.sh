@@ -138,6 +138,15 @@ for p in \
   done
 done
 
+# Fallback: add any helper tools that start with the bundle ID prefix (case-insensitive)
+bundle_prefix=$(echo "$bundle_id" | tr '[:upper:]' '[:lower:]')
+for f in /Library/PrivilegedHelperTools/*; do
+  fname=$(basename "$f" 2>/dev/null)
+  if [[ -e "$f" && "$fname" == ${bundle_prefix}* && ! " ${helpers[@]} " =~ " $f " ]]; then
+    helpers+=("$f")
+  fi
+done
+
 # --- System files (only app-specific subtrees; preserve spaces) ---
 # Exact/common candidates:
 for m in \
@@ -254,6 +263,5 @@ snippet
 # Write file (unless --no-write)
 if (( no_write == 0 )); then
   snippet > "$label_file"
-  echo >> "$label_file"
   print -u2 -- "# Wrote fragment: ${label_file}"
 fi

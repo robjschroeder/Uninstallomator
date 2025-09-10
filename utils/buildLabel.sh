@@ -254,5 +254,6 @@ snippet
 # Write file (unless --no-write)
 if (( no_write == 0 )); then
   snippet > "$label_file"
+  echo >> "$label_file"
   print -u2 -- "# Wrote fragment: ${label_file}"
 fi

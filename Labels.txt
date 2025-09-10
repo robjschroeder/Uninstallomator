@@ -1,6 +1,7 @@
 adobeacrobatreader
 base
 camostudio
+charles
 dfublasterpro
 googlechrome
 microsoftcompanyportal

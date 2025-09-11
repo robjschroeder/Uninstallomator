@@ -22,10 +22,7 @@ adobeacrobat)
     )
     agents=(
       "/Library/LaunchAgents/com.adobe.ccxprocess.plist"
-      "/Library/LaunchAgents/com.jamf.protect.agent.plist"
     )
-    daemons=(
-      "/Library/LaunchDaemons/com.paloaltonetworks.DemUserProxyService.plist"
-    )
+    daemons=()
     profiles=()
 ;;

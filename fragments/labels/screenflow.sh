@@ -1,0 +1,18 @@
+screenflow)
+    app_name="ScreenFlow"
+    bundle_id="net.telestream.screenflow10"
+    app_paths=(
+      "/Applications/ScreenFlow.app"
+    )
+    pkgs=()
+    files=()
+    user_files=(
+      "%USER_HOME%/Library/Application Support/ScreenFlow"
+      "%USER_HOME%/Library/Preferences/net.telestream.screenflow10.plist"
+      "%USER_HOME%/Library/Caches/net.telestream.screenflow10"
+      "%USER_HOME%/Library/Logs/ScreenFlow"
+    )
+    agents=()
+    daemons=()
+    profiles=()
+;;

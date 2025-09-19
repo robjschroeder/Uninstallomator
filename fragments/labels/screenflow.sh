@@ -13,6 +13,8 @@ screenflow)
       "%USER_HOME%/Library/Logs/ScreenFlow"
     )
     agents=()
-    daemons=()
+    daemons=(
+      "/Library/LaunchDaemons/net.telestream.LicensingHelper.plist"
+    )
     profiles=()
 ;;

@@ -12,6 +12,7 @@ intellijidea)
       "%USER_HOME%/Library/Preferences/com.jetbrains.intellij.plist"
       "%USER_HOME%/Library/Caches/com.jetbrains.intellij"
       "%USER_HOME%/Library/Logs/IntelliJ IDEA"
+      "%USER_HOME%/IdeaSnapshots"
     )
     agents=()
     daemons=()

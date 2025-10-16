@@ -72,7 +72,7 @@ if [[ $(/usr/bin/arch) == "arm64" ]]; then
     fi
 fi
 VERSION="1.1.3"
-VERSIONDATE="2025-09-11"
+VERSIONDATE="2025-10-16"
 
 
 # MARK: Functions
@@ -543,6 +543,43 @@ googlechrome)
     daemons=()
     profiles=()
 ;;
+intellijidea)
+    app_name="IntelliJ IDEA"
+    bundle_id="com.jetbrains.intellij"
+    app_paths=(
+      "/Applications/IntelliJ IDEA.app"
+    )
+    pkgs=()
+    files=()
+    user_files=(
+      "%USER_HOME%/Library/Application Support/IntelliJ IDEA"
+      "%USER_HOME%/Library/Application Support/JetBrains"
+      "%USER_HOME%/Library/Preferences/com.jetbrains.intellij.plist"
+      "%USER_HOME%/Library/Caches/com.jetbrains.intellij"
+      "%USER_HOME%/Library/Logs/IntelliJ IDEA"
+      "%USER_HOME%/IdeaSnapshots"
+    )
+    agents=()
+    daemons=()
+    profiles=()
+;;macwhisper)
+    app_name="MacWhisper"
+    bundle_id="com.goodsnooze.MacWhisper"
+    app_paths=(
+      "/Applications/MacWhisper.app"
+    )
+    pkgs=()
+    files=()
+    user_files=(
+      "%USER_HOME%/Library/Application Support/MacWhisper"
+      "%USER_HOME%/Library/Preferences/com.goodsnooze.MacWhisper.plist"
+      "%USER_HOME%/Library/Caches/com.goodsnooze.MacWhisper"
+      "%USER_HOME%/Library/Logs/MacWhisper"
+    )
+    agents=()
+    daemons=()
+    profiles=()
+;;
 microsoftcompanyportal)
     app_name="Company Portal"
     bundle_id="com.microsoft.CompanyPortalMac"
@@ -635,6 +672,26 @@ postman)
     )
     profiles=()
 ;;
+screenflow)
+    app_name="ScreenFlow"
+    bundle_id="net.telestream.screenflow10"
+    app_paths=(
+      "/Applications/ScreenFlow.app"
+    )
+    pkgs=()
+    files=()
+    user_files=(
+      "%USER_HOME%/Library/Application Support/ScreenFlow"
+      "%USER_HOME%/Library/Preferences/net.telestream.screenflow10.plist"
+      "%USER_HOME%/Library/Caches/net.telestream.screenflow10"
+      "%USER_HOME%/Library/Logs/ScreenFlow"
+    )
+    agents=()
+    daemons=(
+      "/Library/LaunchDaemons/net.telestream.LicensingHelper.plist"
+    )
+    profiles=()
+;;
 slack)
     app_name="Slack"
     bundle_id="com.tinyspeck.slackmacgap"
@@ -695,7 +752,26 @@ suspiciouspackage)
     daemons=()
     profiles=()
 ;;
-zoomus)
+whispertranscription)
+    app_name="Whisper Transcription"
+    bundle_id="com.goodsnooze.MacWhisper"
+    app_paths=(
+      "/Applications/Whisper Transcription.app"
+    )
+    pkgs=(
+      "com.goodsnooze.MacWhisper"
+    )
+    files=()
+    user_files=(
+      "%USER_HOME%/Library/Application Support/Whisper Transcription"
+      "%USER_HOME%/Library/Preferences/com.goodsnooze.MacWhisper.plist"
+      "%USER_HOME%/Library/Caches/com.goodsnooze.MacWhisper"
+      "%USER_HOME%/Library/Logs/Whisper Transcription"
+    )
+    agents=()
+    daemons=()
+    profiles=()
+;;zoomus)
     app_name="zoom.us"
     bundle_id="us.zoom.xos"
     app_paths=(
